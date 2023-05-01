@@ -201,6 +201,36 @@ namespace SaodCP.DataStructures
         {
             return this.GetEnumerator();
         }
+
+        /// <summary>
+        /// Отсортировать элементы списка
+        /// </summary>
+        /// <param name="comparer"></param>
+        public void Sort(Comparison<T>? comparer = null)
+        {
+            if (_first == null)
+            {
+                return;
+            }
+
+            if (_first.Value == null)
+            {
+                return;
+            }
+
+            T[] source = new T[Count];
+
+            CopyTo(source, 0);
+
+            var dest = Utils.Utils.MergeSort(source);
+
+            Clear();
+
+            foreach (var item in dest)
+            {
+                Add(item);
+            }            
+        }
     }
 
     /// <summary>
