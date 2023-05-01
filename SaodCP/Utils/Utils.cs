@@ -9,6 +9,14 @@ namespace SaodCP.Utils
 {
     public static class Utils
     {
+        public static bool ValidateLodgerPassportId(
+            string? passportId)
+        {
+            var refString = string.Empty;
+
+            return ValidateLodgerPassportId(passportId, ref refString);
+        }
+
         /// <summary>
         /// Проверка формата номера паспорта
         /// </summary>
@@ -43,7 +51,7 @@ namespace SaodCP.Utils
             {
                 for (var i = 0; i < passportId.Length; i++)
                 {
-                    var c = passportId[0];
+                    var c = passportId[i];
 
                     if (i == 4)
                     {
@@ -61,7 +69,7 @@ namespace SaodCP.Utils
 
                     var found = false;
 
-                    for (var j = 1; j < allowedCharactersArray.Length; j++)
+                    for (var j = 0; j < allowedCharactersArray.Length; j++)
                     {
                         if (c == allowedCharactersArray[j])
                         {
@@ -86,6 +94,57 @@ namespace SaodCP.Utils
             }
 
             return ret;
+        }
+
+        public static string GenerateRandomPassportId()
+        {
+            var chars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+            var passportIdCharArray = new char[11];
+
+            var random = new Random();
+
+            for (int i = 0; i < passportIdCharArray.Length; i++)
+            {
+                if (i == 4)
+                {
+                    passportIdCharArray[i] = '-';
+
+                    continue;
+                }
+
+                passportIdCharArray[i] = chars[random.Next(chars.Length - 1)];
+            }
+
+            return new string(passportIdCharArray);
+        }
+
+        /// <summary>
+        /// The hash code for a String object is computed as
+        // s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
+        // using int arithmetic, 
+        // where s[i] is the i-th character of the string, 
+        // n is the length of the string, 
+        // and ^ indicates exponentiation. 
+        // (The hash value of the empty string is zero.)
+        /// </summary>
+        /// <param name="_key"></param>
+        /// <returns></returns>
+        public static int HashCode(this string _key)
+        {
+            int h = 0;
+
+            if (_key.Length > 0)
+            {
+                char[] val = _key.ToCharArray();
+
+                for (int i = 0; i < _key.Length; i++)
+                {
+                    h = 31 * h + val[i];
+                }
+            }
+
+            return (h);
         }
     }
 }
