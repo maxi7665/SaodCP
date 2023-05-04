@@ -61,7 +61,7 @@ namespace SaodCP.DataStructures
 
         /// <summary>
         /// Добавление элемента, затем сортировка списка
-        /// Работает не за O(1)
+        /// Работает за O(n log(n))
         /// </summary>
         /// <param name="element"></param>
         public new void Add(T element)

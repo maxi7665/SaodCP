@@ -1,10 +1,9 @@
 ﻿using System.Collections;
-using System.Xml;
 
 namespace SaodCP.DataStructures
 {
     /// <summary>
-    /// Односвязный список
+    /// Односвязный циклический список
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class OneWayCycledList<T> : ICollection<T>, IEnumerator<T>

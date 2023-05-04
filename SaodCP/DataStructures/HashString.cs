@@ -3,6 +3,10 @@ using SaodCP.Utils;
 
 namespace SaodCP.Infrastructure
 {
+    /// <summary>
+    /// like-string класс для удобного вызова своей реализации хеша
+    /// через стандартный GetHashCode()
+    /// </summary>
     class HashString : IHashable
     {
         readonly string _value;
@@ -10,6 +14,11 @@ namespace SaodCP.Infrastructure
         public HashString(string value)
         {
             this._value = value;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode();
         }
 
         public int HashCode()
@@ -21,6 +30,7 @@ namespace SaodCP.Infrastructure
         {
             return d._value;
         }
+
         public static implicit operator HashString(string d)
         {
             return new HashString(d);
