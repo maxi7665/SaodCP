@@ -16,7 +16,7 @@ namespace SaodCP.DataStructures
     public class OpenHashTable<T, O> : IDictionary<T, O>
     {
         // стартовое количество бакетов (размер таблицы)
-        protected static readonly int START_BUCKETS_NUM = 32;
+        protected static readonly int START_BUCKETS_NUM = 2048;
 
         // таблица - массив связных списков, элементами
         // которых являются пары ключ-значение
@@ -26,6 +26,7 @@ namespace SaodCP.DataStructures
         protected void Init()
         {
             keyValuePairs = new OneWayCycledList<KeyValuePair<T, O>>[START_BUCKETS_NUM];
+            Count = 0;
         }
         
         /// <summary>
@@ -36,6 +37,7 @@ namespace SaodCP.DataStructures
             var oldKeyValuePairs = keyValuePairs;
 
             keyValuePairs = new OneWayCycledList<KeyValuePair<T, O>>[keyValuePairs.Length * 2];
+            Count = 0;
 
             foreach(var list in oldKeyValuePairs) 
             {
@@ -114,7 +116,10 @@ namespace SaodCP.DataStructures
             var list = keyValuePairs[bucket];
 
             // если длина списка превышает допустимое значение
-            if (list.Count >= keyValuePairs.Length)
+            // попытка учесть и плохое распределение, когда заполняется мало ячеек
+            // и наоборот хорошее, когда элементы равномерно "размазываются" по всем спискам
+            if (list.Count >= keyValuePairs.Length
+                || Count > keyValuePairs.Length * 10)
             {
                 Expand();
 
