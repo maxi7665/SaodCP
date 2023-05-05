@@ -9,6 +9,10 @@ namespace SaodCP.Utils
 {
     public static class Utils
     {
+        static readonly char[] NUMBER_CHARS = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+        static readonly char[] ROOM_NUMBER_FIRST_LITERAL = new char[] { 'Л', 'П', 'О', 'М' };
+
         public static bool ValidateLodgerPassportId(
             string? passportId)
         {
@@ -96,10 +100,92 @@ namespace SaodCP.Utils
             return ret;
         }
 
+        public static bool ValidateRoomNumberId(
+            string? roomNumber)
+        {
+            var str = string.Empty;
+
+            return ValidateRoomNumberId(
+                roomNumber,
+                ref str);
+        }
+
+        /// <summary>
+        /// Проверка формата номера комнаты
+        /// </summary>
+        /// <param name="passportId">Номер комнаты</param>
+        /// <param name="error">Описание ошибки</param>
+        public static bool ValidateRoomNumberId(
+        string? roomNumber,
+        ref string? error)
+        {
+            bool ret = true;
+
+            var description = "Номер комнаты должен соответствовать формату «ANNN», " +
+                "где A –\r\nбуква, обозначающая тип номера\r\n " +
+                "(Л – люкс, П – полулюкс, О – одноместный, М – многоместный);\r\n " +
+                "NNN – порядковый номер (цифры)";
+
+            if (string.IsNullOrWhiteSpace(roomNumber))
+            {
+                ret = false;
+            }
+
+            string number = roomNumber ?? string.Empty;
+
+            if (number.Length != 4)
+            {
+                ret = false;
+            }
+
+
+
+            var firstLiteral = number[0];
+
+            for (int i = 0; i < ROOM_NUMBER_FIRST_LITERAL.Length; i++)
+            {
+                if (firstLiteral == ROOM_NUMBER_FIRST_LITERAL[i])
+                {
+                    break;
+                }
+
+                if (i == ROOM_NUMBER_FIRST_LITERAL.Length - 1)
+                {
+                    ret = false;
+                }
+            }
+
+            for (int i = 1; i < number.Length; i++)
+            {
+                for (int j = 0; j < NUMBER_CHARS.Length; j++)
+                {
+                    if (number[i] == NUMBER_CHARS[j])
+                    {
+                        break;
+                    }
+
+                    if (j == NUMBER_CHARS.Length - 1)
+                    {
+                        ret = false;
+                    }
+                }
+
+                if (!ret)
+                {
+                    break;
+                }
+            }
+
+            if (!ret)
+            {
+                error = description;
+            }
+
+            return ret;
+        }
+
         public static string GenerateRandomPassportId()
         {
-            var chars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-
             var passportIdCharArray = new char[11];
 
             var random = new Random();
@@ -113,10 +199,78 @@ namespace SaodCP.Utils
                     continue;
                 }
 
-                passportIdCharArray[i] = chars[random.Next(chars.Length - 1)];
+                passportIdCharArray[i] = NUMBER_CHARS[random.Next(NUMBER_CHARS.Length - 1)];
             }
 
             return new string(passportIdCharArray);
+        }
+
+        /// <summary>
+        /// Генерация случайного номера комнаты
+        /// </summary>
+        public static string GenerateRandomRoomNumber()
+        {
+            var random = new Random();
+
+            char[] ret = new char[4];
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (i == 0)
+                {
+                    ret[i] = ROOM_NUMBER_FIRST_LITERAL[random.Next(ROOM_NUMBER_FIRST_LITERAL.Length - 1)];
+                }
+                else
+                {
+                    ret[i] = NUMBER_CHARS[random.Next(NUMBER_CHARS.Length - 1)];
+                }
+            }
+
+            return new string(ret);
+        }
+
+        public static string GetNextRoomNumber(string roomNumber)
+        {
+            if (!ValidateRoomNumberId(roomNumber))
+            {
+                throw new ArgumentException(null, nameof(roomNumber));
+            }
+
+            int number = 0;
+
+            int multiplexor = 1;
+
+            for (int i = 3; i > 0; i--)
+            {
+                number += NumCharToInt(roomNumber[i]) * multiplexor;
+
+                multiplexor *= 10;
+            }
+
+            char[] ret = new char[4];
+
+            ret[0] = roomNumber[0];
+
+            var newNumberString = string.Format("{0}", number);
+
+            ret[1] = newNumberString[0];
+            ret[2] = newNumberString[1];
+            ret[3] = newNumberString[2];
+
+            return new string(ret);
+        }
+
+        public static int NumCharToInt(char c)
+        { 
+            for (int i = 0; i < NUMBER_CHARS.Length; i++)
+            {
+                if (c == NUMBER_CHARS[i])
+                {
+                    return i;
+                }
+            }
+
+            throw new ArgumentOutOfRangeException(nameof(c));
         }
 
         /// <summary>
@@ -147,8 +301,8 @@ namespace SaodCP.Utils
             return (h);
         }
 
-        public static T[] MergeSort<T> (
-            this T[] array, 
+        public static T[] MergeSort<T>(
+            this T[] array,
             Comparison<T>? comparer = null)
         {
             if (array.Length == 0
@@ -171,12 +325,12 @@ namespace SaodCP.Utils
                 {
                     if (f != null)
                     {
-                        return ((IComparable)f).CompareTo(s);                        
+                        return ((IComparable)f).CompareTo(s);
                     }
                     else
                     {
                         throw new ArgumentNullException(nameof(f));
-                    }                    
+                    }
                 };
             }
             else
@@ -224,11 +378,11 @@ namespace SaodCP.Utils
                 j = 0;
                 int k = left;
 
-                while (i < leftArrayLength 
+                while (i < leftArrayLength
                     && j < rightArrayLength)
                 {
                     var comparison = comp(leftTempArray[i], rightTempArray[j]);
-                    
+
                     if (comparison <= 0)
                     {
                         array[k++] = leftTempArray[i++];
@@ -249,8 +403,6 @@ namespace SaodCP.Utils
                     array[k++] = rightTempArray[j++];
                 }
             }
-
-            return ret;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using SaodCP.Utils;
+﻿using SaodCP.DataStructures;
+using SaodCP.Utils;
 using System.Transactions;
 
 namespace SaodCP.Models
@@ -10,7 +11,7 @@ namespace SaodCP.Models
     {
         public static readonly string PassportIdPattern = "NNNN-NNNNNN";
 
-        private string passportId = string.Empty;
+        private HashString passportId = string.Empty;
 
         public string PassportId { 
             get => passportId; 

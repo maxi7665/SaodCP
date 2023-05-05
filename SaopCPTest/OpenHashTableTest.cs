@@ -83,5 +83,49 @@ namespace SaopCPTest
 
             Console.WriteLine("Удаление элементов пройдено");
         }
+
+        [TestMethod]
+        public void CustomHashTest()
+        {
+            var hashTable = new OpenHashTable<HashString, string>();
+
+            int cnt = 10000;
+
+            Random rnd = new Random();
+
+            Dictionary<HashString, string> pairs = new();
+
+            for (int i = 0; i < cnt; i++)
+            {
+                var key = rnd.Next().ToString();
+
+                if (!pairs.ContainsKey(key))
+                {
+                    pairs.Add(key, rnd.Next().ToString());
+                }
+            }
+
+            foreach (var (key, value) in pairs)
+            {
+                hashTable.Add(key, value);
+            }
+
+            var keys = new HashSet<HashString>();
+
+            var enumerator = hashTable.GetEnumerator();
+
+            while (enumerator.MoveNext())
+            {
+                keys.Add(enumerator.Current.Key);
+            }
+
+            //Assert.AreEqual(pairs.Keys.ToHashSet(), keys.ToHashSet());
+
+            var except = pairs.Keys.ToHashSet().Except(hashTable.Keys);
+
+            Assert.AreEqual(except.Count(), 0);
+            Assert.IsTrue(pairs.Values.ToHashSet().SetEquals(hashTable.Values.ToHashSet()));
+            Assert.AreEqual(pairs.Count, hashTable.Count);
+        }
     }
 }

@@ -323,7 +323,7 @@ namespace SaodCP.DataStructures
         {
             private readonly OpenHashTable<T, O> _table;
 
-            private int _currentBucket = 0;
+            private int _currentBucket = -1;
 
             private IEnumerator<KeyValuePair<T, O>>? _currentListEnumerator;
 
@@ -362,9 +362,11 @@ namespace SaodCP.DataStructures
                         _currentListEnumerator = null;
                     }
                 }
+
+                OneWayCycledList<KeyValuePair<T, O>>? list = null;
                 
                 // попытка найти новый итератор списка
-                var list = _table.keyValuePairs[_currentBucket];
+                //var list = _table.keyValuePairs[++_currentBucket];
 
                 while (list == null
                     && _currentBucket < _table.keyValuePairs.Length - 1)

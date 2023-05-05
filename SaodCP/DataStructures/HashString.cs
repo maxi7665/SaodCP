@@ -1,13 +1,13 @@
 ﻿using SaodCP.Interfaces;
 using SaodCP.Utils;
 
-namespace SaodCP.Infrastructure
+namespace SaodCP.DataStructures
 {
     /// <summary>
     /// like-string класс для удобного вызова своей реализации хеша
     /// через стандартный GetHashCode()
     /// </summary>
-    class HashString : IHashable
+    public class HashString : IHashable
     {
         readonly string _value;
 
