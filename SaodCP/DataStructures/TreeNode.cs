@@ -13,9 +13,9 @@ namespace SaodCP.DataStructures
     public class TreeNode<T,O>
     {
         public T Key { get; set; }
-        public O Value { get; set; }
+        public O? Value { get; set; }
 
-        public TreeNode(T key, O value)
+        public TreeNode(T key, O? value)
         {
             Key = key;
             Value = value;
@@ -24,14 +24,45 @@ namespace SaodCP.DataStructures
         public TreeNode<T, O>? Left { get; set; } = null;
         public TreeNode<T, O>? Right { get; set; } = null;
 
-        public int GetDepth()
+        /// <summary>
+        /// Разница между высотой левого и правого поддерева
+        /// </summary>
+        public int Diff { get; set; }
+
+        /// <summary>
+        /// Глубина поддерева
+        /// </summary>
+        public int Depth { get; set; }
+        
+        /// <summary>
+        /// Обновить глубину поддерева
+        /// </summary>
+        public void UpdateDepth()
         {
-            int rightDepth = Right?.GetDepth() ?? 0;
-            int leftDepth = Left?.GetDepth() ?? 0;
+            int rightDepth = Right?.Depth + 1 ?? 0;
+            int leftDepth = Left?.Depth + 1 ?? 0;
 
             int max = rightDepth > leftDepth ? rightDepth : leftDepth;
 
-            return max + 1;
+            Depth = max;
+        }
+        
+        /// <summary>
+        /// Обновить разность 
+        /// глубин поддеревьев
+        /// </summary>
+        public void UpdateDiff()
+        {
+            int rightDepth = Right?.Depth + 1 ?? 0;
+            int leftDepth = Left?.Depth + 1 ?? 0;
+
+            Diff = leftDepth - rightDepth;
+        }
+
+        public void UpdateDimensions()
+        {
+            UpdateDepth();
+            UpdateDiff();
         }
     }
 }

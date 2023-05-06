@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.DirectoryServices;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing.Design;
 
 namespace SaodCP.DataStructures
 {
-    public class Tree<T, O>
+    public partial class Tree<T, O>
     {
         private TreeNode<T, O>? head = null;
 
         private Comparison<T> _comparison;
+
+        public int Count { get; private set; } = 0;
 
         public Tree()
         {
@@ -34,7 +31,7 @@ namespace SaodCP.DataStructures
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public void Add(T key, O value)
+        public void Add(T key, O? value = default)
         { 
             var node = new TreeNode<T, O>(key, value);
 
@@ -42,13 +39,15 @@ namespace SaodCP.DataStructures
             {
                 head = node;
 
+                Count = 1;
+
                 return;
             }
 
-            RecursiveAdd(head, node);
+            head = RecursiveAdd(head, node);
         }
 
-        private void RecursiveAdd(
+        private TreeNode<T, O> RecursiveAdd(
             TreeNode<T, O> parent, 
             TreeNode<T, O> addNode)
         {
@@ -58,88 +57,219 @@ namespace SaodCP.DataStructures
             {
                 if (parent.Left != null)
                 {
-                    RecursiveAdd(parent.Left, addNode);
-
-                    return;
+                    parent.Left = RecursiveAdd(parent.Left, addNode);
                 }
                 else
                 {
                     parent.Left = addNode;
+
+                    Count++;
                 }
+
+                parent.UpdateDimensions();
+
+                if (parent.Diff >= 2
+                    || parent.Diff <= -2)
+                {
+                    parent = Rebalance(parent);
+                }
+
+                return parent;
             }
             else if (cmp < 0)
             {
                 if (parent.Right != null)
                 {
-                    RecursiveAdd(parent.Right, addNode);
-
-                    return;
+                    parent.Right = RecursiveAdd(parent.Right, addNode);
                 }
                 else
                 {
                     parent.Right = addNode;
+
+                    Count++;
                 }
+
+                parent.UpdateDimensions();
+
+                if (parent.Diff >= 2
+                    || parent.Diff <= -2)
+                {
+                    parent = Rebalance(parent);
+                }
+
+                return parent;
             }
             else
             {
                 parent.Value = addNode.Value;
+
+                parent.UpdateDimensions();
+
+                return parent;
             }
         }
 
-        // найти и удалить
-        private bool FindAndRemove(
-            TreeNode<T, O> parent,
-            T key)
+        public bool Remove(T key)
         {
-            var cmp = _comparison(parent.Key, key);
+            if (head == null)
+            {
+                return false;
+            }
 
+            bool ret = false;
+
+            head = DeleteNode(head, key, ref ret);
+
+            if (ret)
+            {
+                Count--;
+            }
+
+            return ret;
+        }
+
+        private TreeNode<T, O>? DeleteNode(
+            TreeNode<T, O> currentNode,
+            T itemValue)
+        {
+            bool stackBool = false;
+
+            return DeleteNode(currentNode, itemValue, ref stackBool);
+        }
+
+        // найти и удалить
+        private TreeNode<T,O>? DeleteNode(
+            TreeNode<T,O> currentNode, 
+            T itemValue, 
+            ref bool result)
+        {
+            result = true;
+
+            var cmp = _comparison(currentNode.Key, itemValue);
+
+            // если нашли нужный элемент, начинаем процедуру удаления
             if (cmp == 0)
             {
-                throw new ApplicationException("Tree internal error");
-            }
+                // обработка самого простого случая, вместо узла возвращается null
+                if (currentNode.Left == null
+                    && currentNode.Right == null)
+                {
+                    return null;
+                }
 
-            // ключ меньше чем ключ родителя
-            // необходимо сравнить с левым потомком
+                // обработка двух случаев, с только одним из поддеревьев
+                if (currentNode.Left == null)
+                {
+                    return currentNode.Right;
+                }
+
+                if (currentNode.Right == null)
+                {
+                    return currentNode.Left;
+                }
+
+                // если у ноды есть оба потомка
+                var minNodeInRightSubtree = FindMinNode(currentNode.Right);
+                // заменили текущий элемент минимальным из правого поддерева
+                currentNode.Value = minNodeInRightSubtree.Value;
+                currentNode.Key = minNodeInRightSubtree.Key;
+
+                // ищем в правом поддереве минимальный элемент,
+                // значение которого уже вставлено на место текущего
+                currentNode.Right = DeleteNode(
+                  currentNode.Right,
+                  minNodeInRightSubtree.Key);
+
+                return currentNode;
+            }  
+
+            // попадаем сюда, если элемент не был найден,
+            // просто проваливаемся в дерево глубже и глубже
+
+            // производится рекурсивный вызов этой же функции,
+            // при этом если элемент не будет найден,
+            // то алгоритм просто будет возвращать существующую ссылку на поддерево,
+            // которая присвоится в ту же позицию
             if (cmp > 0)
             {
-                if (parent.Left == null)
+                if (currentNode.Left == null)
                 {
-                    return false;
+                    result = false;
+
+                    return currentNode;
                 }
 
-                var leftCmp = _comparison(parent.Left.Key, key);
+                // проваливаемся в левое поддерево,
+                // после рекурсивной отработки функции _deleteNode
+                // будет возвращен текущий элемент,
+                // который в предыдущем вызове будет присвоен
+                currentNode.Left = DeleteNode(
+                    currentNode.Left, 
+                    itemValue);
 
-                if (leftCmp == 0)
+                // если нового ребенка после удаления надо балансировать, балансируем
+                if (currentNode.Left != null)
                 {
-                    // todo
-                    //parent.Left = Delete();
+                    if (currentNode.Left.Diff == 2
+                        || currentNode.Left.Diff == -2)
+                    {
+                        currentNode.Left = Rebalance(currentNode.Left);
+                    }
                 }
-                else
-                {
-                    // ищем значение для удаления в левом поддереве
-                    return FindAndRemove(parent.Left, key);
-                }
+
+                currentNode.Diff--;
+
+                // обновление параметров
+                currentNode.UpdateDimensions();
+
+                // присваивание на рекурсивный уровень выше,
+                // может быть как в левое поддерево,так и в правое,
+                // на текущем уровне мы не знаем какое поддерево обрабатываем
+                return currentNode;
             }
-            else
+
+            // аналогичная обработка для правого поддерева
+            if (cmp < 0)
             {
-                if (parent.Right == null)
+                if (currentNode.Right == null)
                 {
-                    return false;
+                    result = false;
+
+                    return currentNode;
                 }
 
-                var rightCmp = _comparison(parent.Right.Key, key);
+                currentNode.Right = DeleteNode(
+                    currentNode.Right, 
+                    itemValue);
 
-                if (rightCmp == 0)
+                // если ребенка после удаления надо балансировать, балансируем
+                if (currentNode.Right != null)
                 {
-                    // todo
-                    //parent.Right = Delete();
+                    if (currentNode.Right.Diff == 2
+                        || currentNode.Right.Diff == -2)
+                    {
+                        currentNode.Right = Rebalance(currentNode.Right);
+                    }
                 }
-                else
-                {
-                    // ищем значение для удаления в правом поддереве
-                    return FindAndRemove(parent.Right, key);
-                }
+
+                currentNode.Diff++;
+
+                currentNode.UpdateDimensions();
+
+                return currentNode;
             }
+
+            throw new ApplicationException("Delete Element error");
+        }
+
+        private TreeNode<T,O> FindMinNode(TreeNode<T, O> node)
+        {
+            if (node.Left == null)
+            {
+                return node;
+            }
+
+            return FindMinNode(node.Left);
         }
 
         /// <summary>
