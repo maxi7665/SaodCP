@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Forms.VisualStyles;
+
 namespace SaodCP.Models
 {
     /// <summary>
@@ -25,5 +27,13 @@ namespace SaodCP.Models
         /// Дата выезда постояльца
         /// </summary>
         public DateOnly ToDate { get;set; }
+
+        public override string? ToString()
+        {
+            return $"Заселение постояльца " +
+                $"{this.LodgerPassportId} в номер " +
+                $"{this.ApartmentNumber} " +
+                $"с {this.FromDate} по {this.ToDate}";
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using SaodCP.DataStructures;
 using SaodCP.Models;
+using System.CodeDom;
 
 namespace SaodCP.Database
 {
@@ -80,6 +81,114 @@ namespace SaodCP.Database
             });
 
             FromDataScheme(data);
+        }
+
+        /// <summary>
+        /// Получить сущность определенного типа по идентификатору
+        /// </summary>
+        /// <typeparam name="T">Тип сущности для поиска</typeparam>
+        /// <param name="id">Идентификатор</param>
+        /// <returns></returns>
+        public static T? FindById<T>(string id)
+        {
+            if (typeof(T) == typeof(Lodger))
+            {
+                Lodger? lodger = Lodgers[id];
+
+                if (lodger == null)
+                {
+                    return default;
+                }
+
+                return (T?)(object?)lodger;
+            }
+            else if (typeof(T) == typeof(Apartment))
+            {
+                Apartment? apartment = Apartments.Find(id);
+
+                if (apartment == null)
+                {
+                    return default;
+                }
+
+                return (T?)(object?)apartment;
+            }
+            else
+            {
+                return default;
+            }
+        }
+        
+        /// <summary>
+        /// Добавление нового элемента 
+        /// </summary>
+        /// <typeparam name="T">Тип элемента</typeparam>
+        /// <param name="entry">Новый элемент</param>
+        public static void Add<T>(T entry)
+        {
+            if (entry is Lodger lodger)
+            {
+                Lodgers.Add(lodger.PassportId, lodger);
+            }
+            else if (entry is Apartment apartment)
+            {
+                Apartments.Add(apartment.Number, apartment);
+            }
+            else if (entry is Accommodation accommodation)
+            {
+                Accommodations.Add(accommodation);
+            }
+        }
+
+        public static bool StartAccomodation(
+            string passportId,
+            string roomNumber,
+            DateOnly fromDate,
+            ref string error)
+        {
+            var acc = new Accommodation()
+            {
+                ApartmentNumber = roomNumber,
+                LodgerPassportId = passportId,
+                FromDate = fromDate
+            };
+
+            return true;
+        }
+
+        public static bool ValidateAccomodationWrite(
+            Accommodation acc,
+            out string error)
+        {
+            bool ret = true;
+            error = string.Empty;
+
+            // кол-во периодов проживания в комнате, найденных за период
+            int foundInRoom = 0;
+
+            // todo делать дальше проверку
+            // по кол-ву проживающих в комнате на дату
+
+            // проверка на пересечение периодов проживания для клиента
+            foreach (var accommodation in Accommodations)
+            {
+                if (accommodation.LodgerPassportId == acc.LodgerPassportId
+                    && (accommodation.FromDate <= acc.ToDate
+                    || acc.ToDate == DateOnly.MinValue)
+                    && (accommodation.ToDate >= acc.FromDate
+                    || accommodation.ToDate == DateOnly.MinValue))
+                {
+                    ret = false;
+
+                    error = acc.ToString() 
+                        + "конфликтует с " 
+                        + accommodation.ToString();
+
+                    break;
+                }
+            }
+
+            return ret;
         }
     }
 }
