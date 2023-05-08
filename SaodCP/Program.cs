@@ -1,3 +1,5 @@
+using SaodCP.Database;
+
 namespace SaodCP
 {
     internal static class Program
@@ -11,7 +13,13 @@ namespace SaodCP
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            
+            // todo тест убрать
+            HostelContext.InitTestData();
+
+            Application.Run(new Hostel());
+
+
         }
     }
 }

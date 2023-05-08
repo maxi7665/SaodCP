@@ -2,11 +2,17 @@
 
 namespace SaopCPTest
 {
+    /// <summary>
+    /// Тесты для АВЛ-дерева поиска
+    /// </summary>
     [TestClass]
     public class TreeTest
     {
+        /// <summary>
+        /// Создание, добавление, удаление элементов
+        /// </summary>
         [TestMethod]
-        public void CreateTest()
+        public void CreateAddRemoveTest()
         {
             var tree = new Tree<string, object>();
 
@@ -34,6 +40,28 @@ namespace SaopCPTest
             var rangeSet = Enumerable.Range(0, 100).ToHashSet();
 
             Assert.IsTrue(treeSet.SetEquals(rangeSet));
+
+            var count = intTree.Count;
+
+            // проверка удаления
+            var removed = intTree.Remove(100);
+
+            Assert.IsFalse(removed);
+            Assert.AreEqual(intTree.Count, count);
+
+            foreach (var i in treeSet)
+            {
+                removed = intTree.Remove(i);
+
+                // удаление успешно
+                Assert.IsTrue(removed);
+
+                // элемента больше не содержится в дереве
+                Assert.IsFalse(intTree.Any(kv => kv.Key == i));
+
+                // проверка корректности счетчика
+                Assert.AreEqual(intTree.Count, --count);
+            }
         }
     }
 }

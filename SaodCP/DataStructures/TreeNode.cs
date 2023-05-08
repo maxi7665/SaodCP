@@ -27,7 +27,7 @@ namespace SaodCP.DataStructures
         /// <summary>
         /// Разница между высотой левого и правого поддерева
         /// </summary>
-        public int Diff { get; set; }
+        public int Diff { get => GetDiff(); }
 
         /// <summary>
         /// Глубина поддерева
@@ -51,18 +51,20 @@ namespace SaodCP.DataStructures
         /// Обновить разность 
         /// глубин поддеревьев
         /// </summary>
-        public void UpdateDiff()
+        public int GetDiff()
         {
             int rightDepth = Right?.Depth + 1 ?? 0;
             int leftDepth = Left?.Depth + 1 ?? 0;
 
-            Diff = leftDepth - rightDepth;
+            return leftDepth - rightDepth;
         }
 
+        /// <summary>
+        /// Обновить измерения узла
+        /// </summary>
         public void UpdateDimensions()
         {
             UpdateDepth();
-            UpdateDiff();
         }
     }
 }

@@ -16,6 +16,9 @@ namespace SaodCP.Models
             Number = number;
         }
 
+        /// <summary>
+        /// Номер апартаментов
+        /// </summary>
         public string Number
         {
             get => _number;
@@ -30,12 +33,24 @@ namespace SaodCP.Models
             }
         }
 
+        /// <summary>
+        /// Кол-во спальных мест
+        /// </summary>
         public int BedsNumber { get; set; }
 
+        /// <summary>
+        /// Кол-во комнат
+        /// </summary>
         public int RoomNumber { get; set; }
 
+        /// <summary>
+        /// Есть ли сан.узел
+        /// </summary>
         public bool HasToilet { get; set; }
 
+        /// <summary>
+        /// Список оборудования
+        /// </summary>
         [StringLength(200)]
         public string Equipment { get; set; } = string.Empty;
     }

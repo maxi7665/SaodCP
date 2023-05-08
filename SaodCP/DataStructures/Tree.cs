@@ -1,4 +1,5 @@
 ﻿using System.Drawing.Design;
+using System.Net.Sockets;
 
 namespace SaodCP.DataStructures
 {
@@ -205,7 +206,8 @@ namespace SaodCP.DataStructures
                 // который в предыдущем вызове будет присвоен
                 currentNode.Left = DeleteNode(
                     currentNode.Left, 
-                    itemValue);
+                    itemValue,
+                    ref result);
 
                 // если нового ребенка после удаления надо балансировать, балансируем
                 if (currentNode.Left != null)
@@ -216,8 +218,6 @@ namespace SaodCP.DataStructures
                         currentNode.Left = Rebalance(currentNode.Left);
                     }
                 }
-
-                currentNode.Diff--;
 
                 // обновление параметров
                 currentNode.UpdateDimensions();
@@ -240,7 +240,8 @@ namespace SaodCP.DataStructures
 
                 currentNode.Right = DeleteNode(
                     currentNode.Right, 
-                    itemValue);
+                    itemValue,
+                    ref result);
 
                 // если ребенка после удаления надо балансировать, балансируем
                 if (currentNode.Right != null)
@@ -251,8 +252,6 @@ namespace SaodCP.DataStructures
                         currentNode.Right = Rebalance(currentNode.Right);
                     }
                 }
-
-                currentNode.Diff++;
 
                 currentNode.UpdateDimensions();
 

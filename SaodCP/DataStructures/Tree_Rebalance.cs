@@ -7,6 +7,9 @@ using System.Xml.Linq;
 
 namespace SaodCP.DataStructures
 {
+    /// <summary>
+    /// Операции по балансировке дерева
+    /// </summary>
     public partial class Tree<T, O>
     {
         /// <summary>
@@ -146,6 +149,7 @@ namespace SaodCP.DataStructures
         private TreeNode<T, O> BigRotateRight(TreeNode<T, O> a)
         {
             a.Right = RotateLeft(a.Right ?? throw new NullReferenceException());
+
             return RotateRight(a);
         }
     }
