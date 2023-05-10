@@ -31,8 +31,10 @@
             components = new System.ComponentModel.Container();
             tabControl1 = new TabControl();
             ApartmentsTab = new TabPage();
+            AccButton = new Button();
             ApartmentsGrid = new DataGridView();
             LogdersTab = new TabPage();
+            LodgerAccButton = new Button();
             LodgersGrid = new DataGridView();
             apartmentBindingSource = new BindingSource(components);
             tabControl1.SuspendLayout();
@@ -57,6 +59,7 @@
             // 
             // ApartmentsTab
             // 
+            ApartmentsTab.Controls.Add(AccButton);
             ApartmentsTab.Controls.Add(ApartmentsGrid);
             ApartmentsTab.Location = new Point(4, 24);
             ApartmentsTab.Margin = new Padding(3, 2, 3, 2);
@@ -67,6 +70,17 @@
             ApartmentsTab.Text = "Номера";
             ApartmentsTab.UseVisualStyleBackColor = true;
             // 
+            // AccButton
+            // 
+            AccButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            AccButton.Location = new Point(555, 5);
+            AccButton.Name = "AccButton";
+            AccButton.Size = new Size(90, 23);
+            AccButton.TabIndex = 1;
+            AccButton.Text = "Заселения";
+            AccButton.UseVisualStyleBackColor = true;
+            AccButton.Click += AccButton_Click;
+            // 
             // ApartmentsGrid
             // 
             ApartmentsGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -75,12 +89,13 @@
             ApartmentsGrid.Name = "ApartmentsGrid";
             ApartmentsGrid.ReadOnly = true;
             ApartmentsGrid.RowTemplate.Height = 25;
-            ApartmentsGrid.Size = new Size(582, 283);
+            ApartmentsGrid.Size = new Size(549, 283);
             ApartmentsGrid.TabIndex = 0;
-            ApartmentsGrid.CellContentClick += dataGridView1_CellContentClick;
+
             // 
             // LogdersTab
             // 
+            LogdersTab.Controls.Add(LodgerAccButton);
             LogdersTab.Controls.Add(LodgersGrid);
             LogdersTab.Location = new Point(4, 24);
             LogdersTab.Margin = new Padding(3, 2, 3, 2);
@@ -91,6 +106,17 @@
             LogdersTab.Text = "Постояльцы";
             LogdersTab.UseVisualStyleBackColor = true;
             // 
+            // LodgerAccButton
+            // 
+            LodgerAccButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            LodgerAccButton.Location = new Point(555, 5);
+            LodgerAccButton.Name = "LodgerAccButton";
+            LodgerAccButton.Size = new Size(90, 23);
+            LodgerAccButton.TabIndex = 2;
+            LodgerAccButton.Text = "Заселения";
+            LodgerAccButton.UseVisualStyleBackColor = true;
+            LodgerAccButton.Click += LodgerAccButton_Click;
+            // 
             // LodgersGrid
             // 
             LodgersGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -98,7 +124,7 @@
             LodgersGrid.Location = new Point(0, 0);
             LodgersGrid.Name = "LodgersGrid";
             LodgersGrid.RowTemplate.Height = 25;
-            LodgersGrid.Size = new Size(568, 292);
+            LodgersGrid.Size = new Size(539, 292);
             LodgersGrid.TabIndex = 0;
             // 
             // apartmentBindingSource
@@ -114,6 +140,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "Hostel";
             Text = "Регистрация постояльцев в гостинице";
+            Activated += Hostel_Activated;
             Load += Form1_Load;
             tabControl1.ResumeLayout(false);
             ApartmentsTab.ResumeLayout(false);
@@ -132,5 +159,7 @@
         private DataGridView ApartmentsGrid;
         private BindingSource apartmentBindingSource;
         private DataGridView LodgersGrid;
+        private Button AccButton;
+        private Button LodgerAccButton;
     }
 }
