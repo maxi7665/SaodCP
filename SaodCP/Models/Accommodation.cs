@@ -6,7 +6,7 @@ namespace SaodCP.Models
     /// <summary>
     /// Данные о периоде проживания постояльца в номере
     /// </summary>
-    public class Accommodation
+    public class Accommodation : ICloneable
     {
         /// <summary>
         /// Номер паспорта постояльца
@@ -27,6 +27,11 @@ namespace SaodCP.Models
         /// Дата выезда постояльца
         /// </summary>
         public DateOnly ToDate { get;set; }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
 
         public override string? ToString()
         {

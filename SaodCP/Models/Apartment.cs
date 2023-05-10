@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
 
 namespace SaodCP.Models
 {
@@ -19,6 +21,7 @@ namespace SaodCP.Models
         /// <summary>
         /// Номер апартаментов
         /// </summary>
+        [DisplayName("Номер")]
         public string Number
         {
             get => _number;
@@ -36,22 +39,26 @@ namespace SaodCP.Models
         /// <summary>
         /// Кол-во спальных мест
         /// </summary>
+        [DisplayName("Кол-во спальных мест")]
         public int BedsNumber { get; set; }
 
         /// <summary>
         /// Кол-во комнат
         /// </summary>
+        [DisplayName("Кол-во комнат")]
         public int RoomNumber { get; set; }
 
         /// <summary>
         /// Есть ли сан.узел
         /// </summary>
+        [DisplayName("Сан. узел")]
         public bool HasToilet { get; set; }
 
         /// <summary>
         /// Список оборудования
         /// </summary>
         [StringLength(200)]
+        [DisplayName("Оборудование")]
         public string Equipment { get; set; } = string.Empty;
     }
 }

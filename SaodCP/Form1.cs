@@ -15,12 +15,19 @@ namespace SaodCP
 
         private void BindData()
         {
-            var bindingList = new BindingList<Apartment>(
-                HostelContext.Apartments.Select(kv => kv.Value).ToList());
+            var apartmentsArray = HostelContext
+                .Apartments
+                .Select(kv => kv.Value)
+                .ToArray();
 
-            var source = new BindingSource(bindingList, null);
+            var lodgersGrid = HostelContext
+                .Lodgers
+                .Select(kv => kv.Value)
+                .ToArray();
 
-            ApartmentsGrid.DataSource = source;
+            ApartmentsGrid.DataSource = apartmentsArray;
+            LodgersGrid.DataSource = lodgersGrid;
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
