@@ -31,12 +31,16 @@
             components = new System.ComponentModel.Container();
             tabControl1 = new TabControl();
             ApartmentsTab = new TabPage();
+            ApartmentButton = new Button();
             AccButton = new Button();
             ApartmentsGrid = new DataGridView();
             LogdersTab = new TabPage();
+            ChanheLodgerButton = new Button();
+            CreateLodgerButton = new Button();
             LodgerAccButton = new Button();
             LodgersGrid = new DataGridView();
             apartmentBindingSource = new BindingSource(components);
+            ChangeApartmentButton = new Button();
             tabControl1.SuspendLayout();
             ApartmentsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ApartmentsGrid).BeginInit();
@@ -59,6 +63,8 @@
             // 
             // ApartmentsTab
             // 
+            ApartmentsTab.Controls.Add(ChangeApartmentButton);
+            ApartmentsTab.Controls.Add(ApartmentButton);
             ApartmentsTab.Controls.Add(AccButton);
             ApartmentsTab.Controls.Add(ApartmentsGrid);
             ApartmentsTab.Location = new Point(4, 24);
@@ -69,6 +75,17 @@
             ApartmentsTab.TabIndex = 0;
             ApartmentsTab.Text = "Номера";
             ApartmentsTab.UseVisualStyleBackColor = true;
+            // 
+            // ApartmentButton
+            // 
+            ApartmentButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ApartmentButton.Location = new Point(555, 34);
+            ApartmentButton.Name = "ApartmentButton";
+            ApartmentButton.Size = new Size(90, 23);
+            ApartmentButton.TabIndex = 4;
+            ApartmentButton.Text = "Создать";
+            ApartmentButton.UseVisualStyleBackColor = true;
+            ApartmentButton.Click += ApartmentButton_Click;
             // 
             // AccButton
             // 
@@ -91,10 +108,11 @@
             ApartmentsGrid.RowTemplate.Height = 25;
             ApartmentsGrid.Size = new Size(549, 283);
             ApartmentsGrid.TabIndex = 0;
-
             // 
             // LogdersTab
             // 
+            LogdersTab.Controls.Add(ChanheLodgerButton);
+            LogdersTab.Controls.Add(CreateLodgerButton);
             LogdersTab.Controls.Add(LodgerAccButton);
             LogdersTab.Controls.Add(LodgersGrid);
             LogdersTab.Location = new Point(4, 24);
@@ -105,6 +123,28 @@
             LogdersTab.TabIndex = 1;
             LogdersTab.Text = "Постояльцы";
             LogdersTab.UseVisualStyleBackColor = true;
+            // 
+            // ChanheLodgerButton
+            // 
+            ChanheLodgerButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ChanheLodgerButton.Location = new Point(555, 63);
+            ChanheLodgerButton.Name = "ChanheLodgerButton";
+            ChanheLodgerButton.Size = new Size(90, 23);
+            ChanheLodgerButton.TabIndex = 4;
+            ChanheLodgerButton.Text = "Изменить";
+            ChanheLodgerButton.UseVisualStyleBackColor = true;
+            ChanheLodgerButton.Click += ChangeLodgerButton_Click;
+            // 
+            // CreateLodgerButton
+            // 
+            CreateLodgerButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            CreateLodgerButton.Location = new Point(555, 34);
+            CreateLodgerButton.Name = "CreateLodgerButton";
+            CreateLodgerButton.Size = new Size(90, 23);
+            CreateLodgerButton.TabIndex = 3;
+            CreateLodgerButton.Text = "Создать";
+            CreateLodgerButton.UseVisualStyleBackColor = true;
+            CreateLodgerButton.Click += CreateLodgerButton_Click;
             // 
             // LodgerAccButton
             // 
@@ -130,6 +170,17 @@
             // apartmentBindingSource
             // 
             apartmentBindingSource.DataSource = typeof(Models.Apartment);
+            // 
+            // ChangeApartmentButton
+            // 
+            ChangeApartmentButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ChangeApartmentButton.Location = new Point(555, 63);
+            ChangeApartmentButton.Name = "ChangeApartmentButton";
+            ChangeApartmentButton.Size = new Size(90, 23);
+            ChangeApartmentButton.TabIndex = 5;
+            ChangeApartmentButton.Text = "Изменить";
+            ChangeApartmentButton.UseVisualStyleBackColor = true;
+            ChangeApartmentButton.Click += ChangeApartmentButton_Click;
             // 
             // Hostel
             // 
@@ -161,5 +212,9 @@
         private DataGridView LodgersGrid;
         private Button AccButton;
         private Button LodgerAccButton;
+        private Button ChanheLodgerButton;
+        private Button CreateLodgerButton;
+        private Button ApartmentButton;
+        private Button ChangeApartmentButton;
     }
 }
