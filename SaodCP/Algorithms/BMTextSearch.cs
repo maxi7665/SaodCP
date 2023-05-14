@@ -24,7 +24,7 @@ namespace SaodCP.Algorithms
                 return 0;
             }
 
-            int[] shiftArray = FillShiftArray(text, search);
+            int[] shiftArray = FillShiftArray(search);
 
             int startSearch = 0;
             int foundPosition = 0;
@@ -84,7 +84,7 @@ namespace SaodCP.Algorithms
             return foundPosition;
         }
 
-        private static int[] FillShiftArray(string text, string search)
+        private static int[] FillShiftArray(string search)
         {
             var shiftArray = new int[search.Length];
 
@@ -96,13 +96,13 @@ namespace SaodCP.Algorithms
 
                 shiftArray[i] = search.Length;
 
-                for (int j = text.Length - 1; j >= 0; j--)
+                for (int j = search.Length - 1; j >= 0; j--)
                 {
-                    if (c == text[j])
+                    if (c == search[j])
                     {
                         lastOccurenceIdx = j;
 
-                        shiftArray[i] = text.Length - j - 1;
+                        shiftArray[i] = search.Length - j - 1;
 
                         break;
                     }

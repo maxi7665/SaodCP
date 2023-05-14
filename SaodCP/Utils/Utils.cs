@@ -136,9 +136,11 @@ namespace SaodCP.Utils
             if (number.Length != 4)
             {
                 ret = false;
+
+                error = description;
+
+                return ret;
             }
-
-
 
             var firstLiteral = number[0];
 

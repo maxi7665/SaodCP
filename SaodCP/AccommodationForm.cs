@@ -83,7 +83,7 @@ namespace SaodCP
                 {
                     if (i < ret.Length)
                     {
-                        ret[i] = accommodation;
+                        ret[i++] = accommodation;
                     }
                 }
             }

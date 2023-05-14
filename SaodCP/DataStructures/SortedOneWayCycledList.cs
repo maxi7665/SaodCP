@@ -68,7 +68,7 @@ namespace SaodCP.DataStructures
         {
             base.Add(element);
 
-            Sort();
+            Sort(_comparison);
         }
     }
 }

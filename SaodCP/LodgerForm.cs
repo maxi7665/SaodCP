@@ -104,6 +104,14 @@ namespace SaodCP
             // если не было постояльца, значит создаем
             if (Lodger == null)
             {
+                if (HostelContext.Lodgers.ContainsKey(editLodger.PassportId))
+                {
+                    MessageBox.Show($"Постоялец с номером паспорта" +
+                        $" {editLodger.PassportId} уже существует");
+
+                    return;
+                }
+
                 HostelContext.Lodgers.Add(passport, editLodger);
             }
 

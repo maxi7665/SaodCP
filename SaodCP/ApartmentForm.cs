@@ -86,6 +86,13 @@ namespace SaodCP
             // если создаем новый номер - сохраняем
             if (Apartment == null)
             {
+                if (HostelContext.Apartments.Find(apartment.Number) != null)
+                {
+                    MessageBox.Show($"Номер {apartment.Number} уже существует");
+
+                    return;
+                }
+
                 HostelContext.Apartments.Add(
                     apartment.Number, 
                     apartment);

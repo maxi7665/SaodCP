@@ -221,7 +221,7 @@ namespace SaodCP.DataStructures
 
             CopyTo(source, 0);
 
-            var dest = Utils.Utils.MergeSort(source);
+            var dest = Utils.Utils.MergeSort(source, comparer);
 
             Clear();
 

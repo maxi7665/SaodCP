@@ -90,6 +90,14 @@ namespace SaodCP.Database
                 Name = "Mike"
             });
 
+            data.Lodgers.Add(new Lodger()
+            {
+                PassportId = Utils.Utils.GenerateRandomPassportId(),
+                Address = "SaintP",
+                BirthYear = 1976,
+                Name = "Mikes"
+            });
+
             FromDataScheme(data);
         }
 
@@ -357,9 +365,18 @@ namespace SaodCP.Database
                     checkToDate = DateOnly.MaxValue;
                 }
 
+                // если заселение уже существует,
+                // проверяем по первичному ключу
+                if (existed
+                    && accommodation.FromDate == acc.FromDate
+                    && accommodation.LodgerPassportId == acc.LodgerPassportId
+                    && accommodation.ApartmentNumber == acc.ApartmentNumber)
+                {
+                    continue;
+                }
+
                 // если заселение по комнате не пересекается, пропускаем
-                if (accommodation.ToDate < acc.FromDate
-                    || accommodation.ApartmentNumber != acc.ApartmentNumber
+                if (accommodation.ApartmentNumber != acc.ApartmentNumber
                     || checkFromDate > toDate
                     || checkToDate < fromDate)
                 {
@@ -379,8 +396,7 @@ namespace SaodCP.Database
                 uint startIdx = (uint)(periodFromDate.DayNumber - fromDate.DayNumber);
 
                 //длина периода
-                uint length = (uint)(periodToDate.DayNumber - periodToDate.DayNumber);
-
+                uint length = (uint)(periodToDate.DayNumber - periodFromDate.DayNumber);
 
                 if (startIdx + length > dateLogdersNumArray.Length)
                 {
@@ -391,10 +407,13 @@ namespace SaodCP.Database
                 {
                     dateLogdersNumArray[i]++;
 
-                    if (dateLogdersNumArray[i] > room.BedsNumber)
+                    // если кол-во уже заселенных + 1 (из нового заселения)
+                    // больше чем кол-во кроватей,
+                    // не разрешаем заселение
+                    if (dateLogdersNumArray[i] + 1 > room.BedsNumber)
                     {
-                        error = $"На дату {periodFromDate.AddDays((int)i)} " +
-                            $"кол-во заселенных постояльцев : {dateLogdersNumArray[i]}. \r\n" +
+                        error = $"На дату {fromDate.AddDays((int)i)} " +
+                            $"кол-во заселенных постояльцев : {dateLogdersNumArray[i] + 1}. \r\n" +
                             $"Макс. кол-во проживающих в номере {room.Number} : " +
                             $"{room.BedsNumber}. \r\nКонфликт с {accommodation}";
 
