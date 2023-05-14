@@ -155,6 +155,27 @@ namespace SaodCP
                 }
                 else
                 {
+                    var hasAcc = false;
+
+                    foreach (var acc in HostelContext.Accommodations)
+                    {
+                        if (acc.ApartmentNumber == apartment.Number)
+                        {
+                            hasAcc = true;
+
+                            break;
+                        }
+                    }
+
+                    if (hasAcc)
+                    {
+                        MessageBox.Show("Для комнаты существуют данные " +
+                            "о звселении. " +
+                            "Удаление невозможно");
+
+                        return;
+                    }
+
                     var ret = HostelContext.Apartments.Remove(apartment.Number);
 
                     if (!ret)
@@ -185,6 +206,27 @@ namespace SaodCP
                 }
                 else
                 {
+                    var hasAcc = false;
+
+                    foreach (var acc in HostelContext.Accommodations)
+                    {
+                        if (acc.LodgerPassportId == lodger.PassportId)
+                        {
+                            hasAcc = true;
+
+                            break;
+                        }
+                    }
+
+                    if (hasAcc)
+                    {
+                        MessageBox.Show("Для постояльца существуют данные " +
+                            "о звселении. " +
+                            "Удаление невозможно");
+
+                        return;
+                    }
+
                     var ret = HostelContext.Lodgers.Remove(lodger.PassportId);
 
                     if (!ret)
