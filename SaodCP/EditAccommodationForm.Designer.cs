@@ -1,6 +1,6 @@
 ﻿namespace SaodCP
 {
-    partial class EditAccomodationForm
+    partial class EditAccommodationForm
     {
         /// <summary>
         /// Required designer variable.

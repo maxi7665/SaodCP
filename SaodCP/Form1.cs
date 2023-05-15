@@ -486,7 +486,7 @@ namespace SaodCP
 
             if (item is Lodger lodger)
             {
-                new EditAccomodationForm(
+                new EditAccommodationForm(
                     type: AccommodationOperationType.OpenAccommodation,
                     lodgerPassportId: lodger.PassportId)
                     .ShowDialog();
@@ -510,7 +510,7 @@ namespace SaodCP
 
             if (item is Lodger lodger)
             {
-                new EditAccomodationForm(
+                new EditAccommodationForm(
                     type: AccommodationOperationType.CloseAccomodation,
                     lodgerPassportId: lodger.PassportId)
                     .ShowDialog();

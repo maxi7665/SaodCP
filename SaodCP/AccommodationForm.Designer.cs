@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             AccommodationGrid = new DataGridView();
+            RemoveAccButton = new Button();
             ((System.ComponentModel.ISupportInitialize)AccommodationGrid).BeginInit();
             SuspendLayout();
             // 
@@ -39,14 +40,25 @@
             AccommodationGrid.Location = new Point(12, 12);
             AccommodationGrid.Name = "AccommodationGrid";
             AccommodationGrid.RowTemplate.Height = 25;
-            AccommodationGrid.Size = new Size(776, 426);
+            AccommodationGrid.Size = new Size(405, 282);
             AccommodationGrid.TabIndex = 0;
+            // 
+            // RemoveAccButton
+            // 
+            RemoveAccButton.Location = new Point(428, 12);
+            RemoveAccButton.Name = "RemoveAccButton";
+            RemoveAccButton.Size = new Size(75, 23);
+            RemoveAccButton.TabIndex = 1;
+            RemoveAccButton.Text = "Удалить";
+            RemoveAccButton.UseVisualStyleBackColor = true;
+            RemoveAccButton.Click += RemoveAccButton_Click;
             // 
             // AccommodationForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(515, 306);
+            Controls.Add(RemoveAccButton);
             Controls.Add(AccommodationGrid);
             Name = "AccommodationForm";
             Text = "AccommodationForm";
@@ -58,5 +70,6 @@
         #endregion
 
         private DataGridView AccommodationGrid;
+        private Button RemoveAccButton;
     }
 }

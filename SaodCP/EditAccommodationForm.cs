@@ -11,13 +11,13 @@ using System.Windows.Forms;
 
 namespace SaodCP
 {
-    public partial class EditAccomodationForm : Form
+    public partial class EditAccommodationForm : Form
     {
         private readonly AccommodationOperationType _type;
         private readonly string? _lodgerPassportId;
         private readonly string? _apartmentNumber;
 
-        public EditAccomodationForm(
+        public EditAccommodationForm(
             AccommodationOperationType type,
             string? lodgerPassportId = null,
             string? apartmentNumber = null)

@@ -73,7 +73,7 @@ namespace SaodCP.DataStructures
 
             while (cnt < Count)
             {
-                if (element?.Value?.Equals(item) ?? false)
+                if (element.Value?.Equals(item) ?? false)
                 {
                     return true;
                 }

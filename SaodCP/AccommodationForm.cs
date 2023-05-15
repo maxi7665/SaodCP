@@ -21,7 +21,7 @@ namespace SaodCP
 
         public AccommodationForm()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         private void SetLabel()
@@ -93,6 +93,26 @@ namespace SaodCP
 
         private void AccommodationForm_Load(object sender, EventArgs e)
         {
+            AccommodationGrid.DataSource = FetchData();
+        }
+
+        private void RemoveAccButton_Click(object sender, EventArgs e)
+        {
+            var acc = AccommodationGrid.CurrentRow?.DataBoundItem;
+
+            if (acc == null
+                || acc is not Accommodation) 
+            {
+                MessageBox.Show("Заселение не выбрано");
+
+                return;
+            }
+
+            Accommodation accommodation = acc as Accommodation 
+                ?? throw new NullReferenceException();
+
+            HostelContext.Accommodations.Remove(accommodation);
+
             AccommodationGrid.DataSource = FetchData();
         }
     }
