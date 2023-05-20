@@ -1,7 +1,5 @@
 ﻿using SaodCP.DataStructures;
-using SaodCP.Utils;
 using System.ComponentModel;
-using System.Transactions;
 
 namespace SaodCP.Models
 {
@@ -15,10 +13,11 @@ namespace SaodCP.Models
         private HashString passportId = string.Empty;
 
         [DisplayName("Номер паспорта")]
-        public string PassportId { 
-            get => passportId; 
+        public string PassportId
+        {
+            get => passportId;
             set
-            { 
+            {
                 if (Utils.Utils.ValidateLodgerPassportId(value))
                 {
                     passportId = value;
@@ -27,7 +26,7 @@ namespace SaodCP.Models
                 {
                     throw new FormatException("Неверный формат номера паспорта!");
                 }
-            } 
+            }
         }
 
         [DisplayName("Имя")]
@@ -37,6 +36,6 @@ namespace SaodCP.Models
         public int BirthYear { get; set; }
 
         [DisplayName("Адрес")]
-        public string Address { get; set; } = string.Empty;        
+        public string Address { get; set; } = string.Empty;
     }
 }

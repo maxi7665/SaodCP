@@ -65,7 +65,7 @@
             SaveAccButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             SaveAccButton.Location = new Point(98, 281);
             SaveAccButton.Name = "SaveAccButton";
-            SaveAccButton.Size = new Size(75, 23);
+            SaveAccButton.Size = new Size(81, 23);
             SaveAccButton.TabIndex = 3;
             SaveAccButton.Text = "Сохранить";
             SaveAccButton.UseVisualStyleBackColor = true;
@@ -78,7 +78,7 @@
             DateCalendar.Name = "DateCalendar";
             DateCalendar.TabIndex = 4;
             // 
-            // CreateAccomodationForm
+            // EditAccommodationForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -88,7 +88,7 @@
             Controls.Add(label1);
             Controls.Add(ApartmentNumberComboBox);
             Controls.Add(LodgerPassportIdTextBox);
-            Name = "CreateAccomodationForm";
+            Name = "EditAccommodationForm";
             Text = "Заселение";
             ResumeLayout(false);
             PerformLayout();

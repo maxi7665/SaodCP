@@ -14,12 +14,10 @@ namespace SaodCP
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             
-            // todo тест убрать
+            // инициализация тестовых данных
             HostelContext.InitTestData();
 
             Application.Run(new Hostel());
-
-
         }
     }
 }

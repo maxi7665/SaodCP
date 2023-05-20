@@ -1,29 +1,30 @@
 ﻿using SaodCP.DataStructures;
 using SaodCP.Models;
-using System.CodeDom;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
 
 namespace SaodCP.Database
 {
     public static class HostelContext
     {
         /// <summary>
-        /// Постояльцы
+        /// Постояльцы - хеш-таблица
         /// </summary>
         public static OpenHashTable<string, Lodger> Lodgers { get; set; } = new();
 
         /// <summary>
-        /// Гостиничные номера
+        /// Гостиничные номера - АВЛ-дерево
         /// </summary>
         public static Tree<string, Apartment> Apartments { get; set; } = new();
 
         /// <summary>
-        /// Данные о заселении
+        /// Данные о заселении - сортированный односвязный циклический список
         /// </summary>
         public static SortedOneWayCycledList<Accommodation> Accommodations { get; set; } = new(
             (a1, a2) => a1.ApartmentNumber.CompareTo(a2.ApartmentNumber));
 
+        /// <summary>
+        /// Сериализация данных для сохранения
+        /// </summary>
+        /// <returns></returns>
         public static DataSerializationScheme ToDataSheme()
         {
             var data = new DataSerializationScheme();
@@ -35,6 +36,10 @@ namespace SaodCP.Database
             return data;
         }
 
+        /// <summary>
+        /// Десериализация данных
+        /// </summary>
+        /// <param name="data"></param>
         public static void FromDataScheme(DataSerializationScheme data)
         {
             Lodgers.Clear();
@@ -222,7 +227,7 @@ namespace SaodCP.Database
             // все хорошо, меняем у оригинальной копии дату
             acc.ToDate = endDate;
 
-            return ret;            
+            return ret;
         }
 
         /// <summary>

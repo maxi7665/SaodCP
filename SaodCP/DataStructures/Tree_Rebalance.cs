@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace SaodCP.DataStructures
+﻿namespace SaodCP.DataStructures
 {
     /// <summary>
     /// Операции по балансировке дерева
@@ -116,7 +109,7 @@ namespace SaodCP.DataStructures
         /// <exception cref="ArgumentNullException"></exception>
         private TreeNode<T, O> RotateRight(TreeNode<T, O> b)
         {
-            TreeNode<T,O> a = b.Right ?? throw new NullReferenceException();
+            TreeNode<T, O> a = b.Right ?? throw new NullReferenceException();
 
             b.Right = a.Left;
 

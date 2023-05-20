@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SaodCP.DataStructures
+﻿namespace SaodCP.DataStructures
 {
     /// <summary>
     /// Узел дерева
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class TreeNode<T,O>
+    public class TreeNode<T, O>
     {
         public T Key { get; set; }
         public O? Value { get; set; }
@@ -33,7 +27,7 @@ namespace SaodCP.DataStructures
         /// Глубина поддерева
         /// </summary>
         public int Depth { get; set; }
-        
+
         /// <summary>
         /// Обновить глубину поддерева
         /// </summary>
@@ -46,7 +40,7 @@ namespace SaodCP.DataStructures
 
             Depth = max;
         }
-        
+
         /// <summary>
         /// Обновить разность 
         /// глубин поддеревьев

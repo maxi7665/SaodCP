@@ -20,7 +20,7 @@ namespace SaopCPTest
             search = "qwe";
 
             found = TextSearch(text, search);
-            
+
             Assert.AreEqual(1, found);
 
             search = "werty";

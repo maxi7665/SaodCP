@@ -1,5 +1,4 @@
-﻿using SaodCP.Database;
-using static SaodCP.Database.HostelContext;
+﻿using static SaodCP.Database.HostelContext;
 
 namespace SaopCPTest
 {
@@ -19,8 +18,8 @@ namespace SaopCPTest
             var startDate = DateOnly.FromDateTime(DateTime.Now);
 
             var started = StartAccomodation(
-                lodger.PassportId, 
-                room.Number, 
+                lodger.PassportId,
+                room.Number,
                 startDate,
                 ref error);
 

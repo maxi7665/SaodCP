@@ -3,6 +3,11 @@ using System.Net.Sockets;
 
 namespace SaodCP.DataStructures
 {
+    /// <summary>
+    /// АВЛ-дерево поиска
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="O"></typeparam>
     public partial class Tree<T, O>
     {
         private TreeNode<T, O>? head = null;
@@ -110,6 +115,11 @@ namespace SaodCP.DataStructures
             }
         }
 
+        /// <summary>
+        /// Удалить по ключу
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public bool Remove(T key)
         {
             if (head == null)
@@ -187,10 +197,7 @@ namespace SaodCP.DataStructures
             // попадаем сюда, если элемент не был найден,
             // просто проваливаемся в дерево глубже и глубже
 
-            // производится рекурсивный вызов этой же функции,
-            // при этом если элемент не будет найден,
-            // то алгоритм просто будет возвращать существующую ссылку на поддерево,
-            // которая присвоится в ту же позицию
+            // производится рекурсивный вызов этой же функции
             if (cmp > 0)
             {
                 if (currentNode.Left == null)
@@ -200,10 +207,7 @@ namespace SaodCP.DataStructures
                     return currentNode;
                 }
 
-                // проваливаемся в левое поддерево,
-                // после рекурсивной отработки функции _deleteNode
-                // будет возвращен текущий элемент,
-                // который в предыдущем вызове будет присвоен
+                // проваливаемся в левое поддерево
                 currentNode.Left = DeleteNode(
                     currentNode.Left, 
                     itemValue,

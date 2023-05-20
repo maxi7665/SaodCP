@@ -7,6 +7,9 @@ namespace SaopCPTest
     [TestClass]
     public class LodgerTest
     {
+        /// <summary>
+        /// Тестирование генерации случайного Id паспорта
+        /// </summary>
         [TestMethod]
         public void RandomPassportIdTest()
         {
@@ -20,6 +23,9 @@ namespace SaopCPTest
             }
         }
 
+        /// <summary>
+        /// Тестирование функции проверки формата Id паспорта
+        /// </summary>
         [TestMethod]
         public void PassportIdValidationTest()
         {
@@ -51,6 +57,9 @@ namespace SaopCPTest
             Assert.IsFalse(Utils.ValidateLodgerPassportId(passportId));
         }
 
+        /// <summary>
+        /// Тестирование создания постояльца и генерации ИД паспорта
+        /// </summary>
         [TestMethod]
         public void CreateLodgerTest()
         {

@@ -1,11 +1,6 @@
-using System.Collections.Generic;
-using System.ComponentModel;
-using System;
-using SaodCP.Models;
 using SaodCP.Database;
+using SaodCP.Models;
 using System.Text;
-using SaodCP.DataStructures;
-using System.Drawing.Design;
 
 namespace SaodCP
 {

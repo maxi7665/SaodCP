@@ -1,6 +1,5 @@
 ﻿
 using System.ComponentModel;
-using System.Windows.Forms.VisualStyles;
 
 namespace SaodCP.Models
 {
@@ -31,7 +30,7 @@ namespace SaodCP.Models
         /// Дата выезда постояльца
         /// </summary>
         [DisplayName("Дата ПО")]
-        public DateOnly ToDate { get;set; }
+        public DateOnly ToDate { get; set; }
 
         public object Clone()
         {

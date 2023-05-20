@@ -1,10 +1,5 @@
 ﻿using SaodCP.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace SaodCP.Database
 {
@@ -15,7 +10,7 @@ namespace SaodCP.Database
     {
         public List<Accommodation> Accommodations { get; set; } = new List<Accommodation>();
 
-        public List<Apartment> Apartments { get; set; } = new List<Apartment>();   
+        public List<Apartment> Apartments { get; set; } = new List<Apartment>();
 
         public List<Lodger> Lodgers { get; set; } = new List<Lodger>();
 

@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
-using System.DirectoryServices.ActiveDirectory;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SaodCP.DataStructures
 {
@@ -28,7 +21,7 @@ namespace SaodCP.DataStructures
             keyValuePairs = new OneWayCycledList<KeyValuePair<T, O>>[START_BUCKETS_NUM];
             Count = 0;
         }
-        
+
         /// <summary>
         /// Расширение хеш-корзины в 2 раза
         /// </summary>
@@ -39,14 +32,14 @@ namespace SaodCP.DataStructures
             keyValuePairs = new OneWayCycledList<KeyValuePair<T, O>>[keyValuePairs.Length * 2];
             Count = 0;
 
-            foreach(var list in oldKeyValuePairs) 
+            foreach (var list in oldKeyValuePairs)
             {
                 if (list == null)
                 {
                     continue;
                 }
 
-                foreach(var pair in list)
+                foreach (var pair in list)
                 {
                     this.Add(pair);
                 }
@@ -60,7 +53,7 @@ namespace SaodCP.DataStructures
         /// <returns></returns>
         protected int GetBucketNumberByKey(T key)
         {
-            var number =  key?.GetHashCode() % keyValuePairs.Length
+            var number = key?.GetHashCode() % keyValuePairs.Length
                 ?? throw new ArgumentNullException(nameof(key));
 
             return number >= 0
@@ -68,7 +61,8 @@ namespace SaodCP.DataStructures
                 : -number;
         }
 
-        public O this[T key] {
+        public O this[T key]
+        {
             get
             {
                 int bucket = GetBucketNumberByKey(key);
@@ -204,7 +198,7 @@ namespace SaodCP.DataStructures
 
         public void CopyTo(KeyValuePair<T, O>[] array, int arrayIndex)
         {
-            foreach(var kv in this)
+            foreach (var kv in this)
             {
                 array[arrayIndex++] = kv;
             }
@@ -305,12 +299,12 @@ namespace SaodCP.DataStructures
             if (!ContainsKey(key))
             {
                 value = default;
-                
+
                 return false;
             }
 
-            value = this[key]; 
-            
+            value = this[key];
+
             return true;
         }
 
@@ -364,9 +358,6 @@ namespace SaodCP.DataStructures
                 }
 
                 OneWayCycledList<KeyValuePair<T, O>>? list = null;
-                
-                // попытка найти новый итератор списка
-                //var list = _table.keyValuePairs[++_currentBucket];
 
                 while (list == null
                     && _currentBucket < _table.keyValuePairs.Length - 1)
@@ -389,7 +380,7 @@ namespace SaodCP.DataStructures
                     else
                     {
                         return false;
-                    }                    
+                    }
                 }
             }
 

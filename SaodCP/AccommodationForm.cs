@@ -1,15 +1,5 @@
 ﻿using SaodCP.Database;
 using SaodCP.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SaodCP
 {
@@ -101,14 +91,14 @@ namespace SaodCP
             var acc = AccommodationGrid.CurrentRow?.DataBoundItem;
 
             if (acc == null
-                || acc is not Accommodation) 
+                || acc is not Accommodation)
             {
                 MessageBox.Show("Заселение не выбрано");
 
                 return;
             }
 
-            Accommodation accommodation = acc as Accommodation 
+            Accommodation accommodation = acc as Accommodation
                 ?? throw new NullReferenceException();
 
             HostelContext.Accommodations.Remove(accommodation);

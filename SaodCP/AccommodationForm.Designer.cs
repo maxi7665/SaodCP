@@ -45,6 +45,7 @@
             // 
             // RemoveAccButton
             // 
+            RemoveAccButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             RemoveAccButton.Location = new Point(428, 12);
             RemoveAccButton.Name = "RemoveAccButton";
             RemoveAccButton.Size = new Size(75, 23);

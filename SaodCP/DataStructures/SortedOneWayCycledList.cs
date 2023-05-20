@@ -14,6 +14,9 @@ namespace SaodCP.DataStructures
     {
         private Comparison<T> _comparison;
 
+        /// <summary>
+        /// Делегат для сравнения элементов
+        /// </summary>
         public Comparison<T> Comparison 
         { 
             get => _comparison; 

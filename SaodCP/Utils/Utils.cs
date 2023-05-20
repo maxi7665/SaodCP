@@ -1,9 +1,4 @@
 ﻿using SaodCP.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SaodCP.Utils
 {
@@ -13,6 +8,9 @@ namespace SaodCP.Utils
 
         static readonly char[] ROOM_NUMBER_FIRST_LITERAL = new char[] { 'Л', 'П', 'О', 'М' };
 
+        /// <summary>
+        /// Проверка формата номера паспорта постояльца
+        /// </summary>
         public static bool ValidateLodgerPassportId(
             string? passportId)
         {
@@ -100,6 +98,9 @@ namespace SaodCP.Utils
             return ret;
         }
 
+        /// <summary>
+        /// Проверка формата номера гостичничного номера
+        /// </summary>
         public static bool ValidateRoomNumberId(
             string? roomNumber)
         {
@@ -186,6 +187,9 @@ namespace SaodCP.Utils
             return ret;
         }
 
+        /// <summary>
+        /// Генерация случайного ИД паспорта
+        /// </summary>
         public static string GenerateRandomPassportId()
         {
             var passportIdCharArray = new char[11];
@@ -231,6 +235,9 @@ namespace SaodCP.Utils
             return new string(ret);
         }
 
+        /// <summary>
+        /// Получить следующий по порядку номер комнаты
+        /// </summary>
         public static string GetNextRoomNumber(string roomNumber)
         {
             if (!ValidateRoomNumberId(roomNumber))
@@ -262,8 +269,11 @@ namespace SaodCP.Utils
             return new string(ret);
         }
 
+        /// <summary>
+        /// Перевод символа цифры в численное представление
+        /// </summary>
         public static int NumCharToInt(char c)
-        { 
+        {
             for (int i = 0; i < NUMBER_CHARS.Length; i++)
             {
                 if (c == NUMBER_CHARS[i])
@@ -303,6 +313,15 @@ namespace SaodCP.Utils
             return (h);
         }
 
+        /// <summary>
+        /// Сортировка слиянием
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="array">Исходный массив</param>
+        /// <param name="comparer">Сравнение элементов</param>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
         public static T[] MergeSort<T>(
             this T[] array,
             Comparison<T>? comparer = null)
@@ -317,7 +336,7 @@ namespace SaodCP.Utils
 
             if (comparer == null)
             {
-                if (!(array[0] is IComparable))
+                if (array[0] is not IComparable)
                 {
                     throw new ApplicationException(
                         $"Comparator is not found and type {nameof(T)} is not IComparable");

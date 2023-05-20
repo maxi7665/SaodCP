@@ -41,22 +41,18 @@ namespace SaodCP
                 return;
             }
 
-            int bedsNumber;
-
             if (!int.TryParse(
                     BedsNumberTextBox.Text.Trim(),
-                    out bedsNumber))
+                    out int bedsNumber))
             {
                 MessageBox.Show("Неправильный формат кол-ва кроватей");
 
                 return;
             }
 
-            int roomNumber;
-
             if (!int.TryParse(
                     BedsNumberTextBox.Text.Trim(),
-                    out roomNumber))
+                    out int roomNumber))
             {
                 MessageBox.Show("Неправильный формат кол-ва комнат");
 

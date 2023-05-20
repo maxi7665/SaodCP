@@ -1,17 +1,17 @@
 ﻿using SaodCP.DataStructures;
 using SaodCP.Utils;
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SaopCPTest
 {
+    /// <summary>
+    /// Тест сортировки 
+    /// </summary>
     [TestClass]
     public class SortTest
     {
+        /// <summary>
+        /// Тест сортировки массива слиянием
+        /// </summary>
         [TestMethod]
         public void ArraySortTest()
         {
@@ -22,7 +22,7 @@ namespace SaopCPTest
                 .Select(i => randNum.Next(100))
                 .ToArray();
 
-            // сортировка по умолчанию (возрастанию)
+            // сортировка по умолчанию (по возрастанию)
             var testDest = source.MergeSort();
 
             var trustList = source.ToList();
@@ -32,14 +32,14 @@ namespace SaopCPTest
             var trustDest = trustList.ToArray();
 
             Assert.AreEqual(trustDest.Length, testDest.Length);
-            
+
             for (int i = 0; i < trustDest.Length; i++)
             {
                 Assert.AreEqual(trustDest[i], testDest[i]);
             }
 
             // сортировка по убыванию
-            Comparison<int> comparison = (f, s) => - f.CompareTo(s);
+            Comparison<int> comparison = (f, s) => -f.CompareTo(s);
 
             testDest = source.MergeSort(comparison);
 
@@ -57,6 +57,9 @@ namespace SaopCPTest
             }
         }
 
+        /// <summary>
+        /// Тест автоматически сортируемого односвязного списка
+        /// </summary>
         [TestMethod]
         public void SortedListTest()
         {
@@ -82,7 +85,7 @@ namespace SaopCPTest
 
             int cnt = 0;
 
-            foreach(int element in sortedList)
+            foreach (int element in sortedList)
             {
                 Assert.AreEqual(element, trustDest[cnt]);
 

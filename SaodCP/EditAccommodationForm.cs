@@ -1,13 +1,4 @@
 ﻿using SaodCP.Database;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SaodCP
 {
@@ -90,7 +81,7 @@ namespace SaodCP
                 case AccommodationOperationType.OpenAccommodation:
 
                     result = HostelContext.StartAccomodation(
-                        passportId, 
+                        passportId,
                         apartmentNumber,
                         onDate,
                         ref error);

@@ -1,15 +1,16 @@
 ﻿using SaodCP.DataStructures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SaopCPTest
 {
+    /// <summary>
+    /// Тестирование хеш-таблицы
+    /// </summary>
     [TestClass]
     public class OpenHashTableTest
     {
+        /// <summary>
+        /// Создать, добавить, получить
+        /// </summary>
         [TestMethod]
         public void CreateAddGetTest()
         {
@@ -26,6 +27,11 @@ namespace SaopCPTest
             Assert.AreEqual("2", value);
         }
 
+        /// <summary>
+        /// Нагрузочное тестирование - добавление 1000000 элементов
+        /// Тестирование удаление элементов
+        /// Тестирование перечисления элементов
+        /// </summary>
         [TestMethod]
         public void RebalanceRemoveTest()
         {
@@ -50,7 +56,7 @@ namespace SaopCPTest
 
             int count = 0;
 
-            foreach(KeyValuePair<string, string> pair in pairs)
+            foreach (KeyValuePair<string, string> pair in pairs)
             {
                 hashTable.Add(pair.Key, pair.Value);
 
@@ -84,6 +90,9 @@ namespace SaopCPTest
             Console.WriteLine("Удаление элементов пройдено");
         }
 
+        /// <summary>
+        /// Тестирование корректной работы с хеш-значениями
+        /// </summary>
         [TestMethod]
         public void CustomHashTest()
         {
